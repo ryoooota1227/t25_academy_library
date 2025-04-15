@@ -26,6 +26,5 @@ public class LoginController {
     }
 
     //testコメント
+    //test
 }
-
-
