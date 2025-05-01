@@ -23,13 +23,13 @@
                                  <a th:href="@{/book/index}" class="link">← 一覧へ戻る</a>
                          </div>
                                 
-                                <th class="title">書籍名*</th>
+                                <th class="title">書籍名<span class="ster">* </span></th>
                                 <br>
                                     <input type="text" th:field="*{title}" placeholder="書籍名を入力"name="title" />
                                     <div class="error_msg" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
                                 </br>
                            
-                                <th ckass="isbn">ISBN*</th>
+                                <th ckass="isbn">ISBN<span class="ster">* </span></th>
                                 <br>
                                     <input type="text" th:field="*{isbn}"  placeholder="ISBNを入力"name="isbn" />
                                     <div class="error_msg" th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}"></div>
