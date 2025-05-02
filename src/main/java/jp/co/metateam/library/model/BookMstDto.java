@@ -19,17 +19,17 @@ import lombok.Setter;
 @Setter
 public class BookMstDto {
 
-    
+   
     private Long id; 
     
    
+    
     private String isbn;
 
     boolean errEmailFlg = false;
 
 
    
-    @Size(max = 255)
     private String title;
     
     private Timestamp deletedAt;
