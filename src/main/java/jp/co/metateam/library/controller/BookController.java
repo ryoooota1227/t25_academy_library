@@ -67,54 +67,48 @@ public class BookController {
 
              List<String> errorMessages = new ArrayList<>();  // エラーメッセージのリスト
  
-        //書籍名が未入力→”書籍名は必須です”
-        if (bookMstDto == null || bookMstDto.getTitle().trim().equals("")){
-            //どっちかがtrueなら、この中の処理が実行される
-            errorMessages.add("書籍名は必須です");
-            result.rejectValue("title", "error.required", "書籍名は必須です");
-            errEmpbookFlg = true;
-   
-}
+            //書籍名が未入力→”書籍名は必須です”
+            if (bookMstDto == null || bookMstDto.getTitle().trim().equals("")){
+                //どっちかがtrueなら、この中の処理が実行される
+                errorMessages.add("書籍名は必須です");
+                result.rejectValue("title", "error.required", "書籍名は必須です");
+                errEmpbookFlg = true;
 
-        if(isbn == null || title.isEmpty()){
-            result.rejectValue("isbn", "error.value", "ISBNは必須です");
-            errIsbnFlg = true;
         }
-
-        if(title == null || title.isEmpty()){
-            result.rejectValue("title", "error.value", "書籍名は必須です");
-            errEmpbookFlg = true;
-        }
-
-        if(isbn.length() != 13 ){
-            result.rejectValue("title", "error.value", "ISBNは13文字で入力してください");
-            errEmpbookFlg = true;
-        }
-
-        if(isbn.matches("^[0-9]+$")){
-            result.rejectValue("title", "error.value", "ISBNは半角で入力してください");
-            errEmpbookFlg = true;
-        }
-
+        
         if(title.length() > 255 ){
             result.rejectValue("title", "error.value", "書籍名は255文字以下で入力してください");
             errEmpbookFlg = true;
         }
-        //ISBNの重複チェック
-        if (isbnExist == null) {
-            errorMessages.add("登録済みのISBNです");
-            result.rejectValue("isbn", "error.exists", "登録済みのISBNです");
-            errIsbnFlg = true; // エラーが一つでもあるとtrueになる
-        }
 
+        if(isbn == null || isbn.isEmpty()){
+            result.rejectValue("isbn", "error.value", "ISBNは必須です");
+            errIsbnFlg = true;
+        } 
+        
+        if(!isbn.matches("^[\\p{ASCII}]*$")){
+            result.rejectValue("isbn", "error.value", "ISBNは半角で入力してください");
+            errEmpbookFlg = true;
+        }
+        if(isbn.length() != 13 ){
+        result.rejectValue("isbn", "error.value", "ISBNは13文字で入力してください");
+        errEmpbookFlg = true;
+            // }else if(isbn.matches("^[\\x00-\\x7F]+$")){
+            // result.rejectValue("isbn", "error.value", "ISBNは半角で入力してください");
+            // errEmpbookFlg = true;
+            // }
+        
+       
+        }
         //重複チェック↓
         // もしISBNがすでに存在している場合、エラーを返す
       
-        if (isbnExist == null) {
+        if ( isbnExist != null) {
         errorMessages.add("登録済みのISBNです");
         result.rejectValue("isbn", "error.exists", "登録済みのISBNです");
         errIsbnFlg = true;//}
         }
+        
         // エラーがあれば、エラーメッセージリストをフラッシュ属性に渡す
         if (errEmpbookFlg || errIsbnFlg) {
             ra.addFlashAttribute("errorMessages", errorMessages);
@@ -128,7 +122,7 @@ public class BookController {
             bookMstService.save(bookMstDto);
 
             return "redirect:/book/index";
-
+    
         } catch (Exception e) {
             log.error(e.getMessage());
  
