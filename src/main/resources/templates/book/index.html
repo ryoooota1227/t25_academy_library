@@ -3,7 +3,6 @@
 <head th:replace="~{common :: meta_header('書籍一覧',~{::link},~{::script})}">
     <title th:text="${title}+' | MTLibrary'"></title>
     <link rel="stylesheet" th:href="@{/css/book/index.css}" />
-    
     <script type="text/javascript" th:src="@{/js/book/index.js}"></script>
 </head>
 <body>
@@ -13,7 +12,8 @@
             <div th:replace="~{common :: header}"></div>
             <div class="inner_contens">
                 <div class="page_title">書籍一覧</div>
-                    <a th:href="@{/book/add}" class="btn_book">書籍登録</a>
+                <img th:src="@{/image/icons/add.png}">
+                        <a th:href="@{/book/add}" class="btn_book">書籍登録</a>
             </div>
             <table class="books_table">
                 <thead>
